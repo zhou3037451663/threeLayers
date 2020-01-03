@@ -28,4 +28,10 @@ public interface StudentDao {
 
     //查询全部学生信息
     List<Student> studentList();
+
+    //查询学生总数
+    int StudentCount();
+
+    //分页查询 currentPage(当前页)  pageSize(页面大小：每页多少条)
+    List<Student> queryStudentsByPage(int currentPage,int pageSize);
 }

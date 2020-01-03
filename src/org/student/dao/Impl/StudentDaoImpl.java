@@ -4,6 +4,7 @@ import org.student.dao.BaseDao;
 import org.student.dao.StudentDao;
 import org.student.entity.Student;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,29 @@ public class StudentDaoImpl  extends BaseDao implements StudentDao {
             e.printStackTrace();
         }
 
+        return studentList;
+    }
+
+    //查询学生总数
+    public int StudentCount() {
+        String sql="select count(1) from student";
+        return this.getStudentCount(sql);
+    }
+
+   //分页查询
+    public List<Student> queryStudentsByPage(int currentPage, int pageSize) {
+        List<Student> studentList=new ArrayList<Student>();
+        String sql="SELECT * FROM student LIMIT ?,?";
+        Object[] param={currentPage*pageSize,pageSize};
+        ResultSet rs = this.execuSelect(sql, param);
+        try {
+            while (rs.next()) {
+                Student student=new Student(rs.getString("sno"),rs.getString("sname"),rs.getInt("sage"),rs.getString("saddress"));
+                studentList.add(student);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return studentList;
     }
 }

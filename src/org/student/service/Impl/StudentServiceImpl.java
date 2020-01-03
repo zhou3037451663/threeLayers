@@ -59,4 +59,14 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public List<Student> studentList() {
        return studentDao.studentList();
     }
+
+   //查询学生总数
+    public int StudentCount() {
+        return studentDao.StudentCount();
+    }
+
+   //分页查询
+    public List<Student> queryStudentsByPage(int currentPage, int pageSize) {
+        return studentDao.queryStudentsByPage(currentPage,pageSize);
+    }
 }

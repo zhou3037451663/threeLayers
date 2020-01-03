@@ -25,7 +25,12 @@ public class BaseDao{
         return conn;
     }
 
-
+    /**
+     * 增删改的方法
+     * @param sql
+     * @param param
+     * @return
+     */
     public int execudeUpdate(String sql,Object... param){
         int num=0;
         try {
@@ -41,5 +46,41 @@ public class BaseDao{
             e.printStackTrace();
         }
         return num;
+    }
+
+    public ResultSet execuSelect(String sql,Object... param){
+        try {
+            conn=getConn();
+           pstmt=conn.prepareStatement(sql);
+           if (param!=null){
+               for (int i = 0; i <param.length ; i++) {
+                   pstmt.setObject(i+1,param[i]);
+               }
+           }
+            rs=pstmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    /**
+     * 查询总数的方法
+     * @param sql
+     * @return
+     */
+    public int getStudentCount(String sql){
+        int count=-1;
+        try {
+            this.conn=this.getConn();
+            pstmt=conn.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            if (rs.next()){
+                count=rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }
