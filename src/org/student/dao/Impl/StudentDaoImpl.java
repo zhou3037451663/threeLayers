@@ -96,7 +96,7 @@ public class StudentDaoImpl  extends BaseDao implements StudentDao {
     public List<Student> queryStudentsByPage(int currentPage, int pageSize) {
         List<Student> studentList=new ArrayList<Student>();
         String sql="SELECT * FROM student LIMIT ?,?";
-        Object[] param={currentPage*pageSize,pageSize};
+        Object[] param={(currentPage-1)*pageSize,pageSize};
         ResultSet rs = this.execuSelect(sql, param);
         try {
             while (rs.next()) {
